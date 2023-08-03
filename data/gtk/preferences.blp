@@ -175,6 +175,15 @@ template $PreferencesWindow : Adw.PreferencesWindow {
         }
 
         Adw.ActionRow {
+          title: _("Import Amazon Games");
+          activatable-widget: heroic_import_amazon_switch;
+
+          Switch heroic_import_amazon_switch {
+            valign: center;
+          }
+        }
+
+        Adw.ActionRow {
           title: _("Import Sideloaded Games");
           activatable-widget: heroic_import_sideload_switch;
 
@@ -192,6 +201,20 @@ template $PreferencesWindow : Adw.PreferencesWindow {
           title: _("Install Location");
 
           Button bottles_data_file_chooser_button {
+            icon-name: "folder-symbolic";
+            valign: center;
+          }
+        }
+      }
+
+      Adw.ExpanderRow dolphin_expander_row {
+        title: _("Dolphin");
+        show-enable-switch: true;
+
+        Adw.ActionRow dolphin_cache_action_row {
+          title: _("Cache Location");
+
+          Button dolphin_cache_file_chooser_button {
             icon-name: "folder-symbolic";
             valign: center;
           }

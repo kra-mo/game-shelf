@@ -35,6 +35,7 @@ from src.details_window import DetailsWindow
 from src.game import Game
 from src.importer.importer import Importer
 from src.importer.sources.bottles_source import BottlesSource
+from src.importer.sources.dolphin_source import DolphinSource
 from src.importer.sources.flatpak_source import FlatpakSource
 from src.importer.sources.heroic_source import HeroicSource
 from src.importer.sources.itch_source import ItchSource
@@ -45,8 +46,7 @@ from src.logging.setup import log_system_info, setup_logging
 from src.preferences import PreferencesWindow
 from src.store.managers.display_manager import DisplayManager
 from src.store.managers.file_manager import FileManager
-from src.store.managers.local_cover_manager import LocalCoverManager
-from src.store.managers.online_cover_manager import OnlineCoverManager
+from src.store.managers.cover_manager import CoverManager
 from src.store.managers.sgdb_manager import SGDBManager
 from src.store.managers.steam_api_manager import SteamAPIManager
 from src.store.store import Store
@@ -97,9 +97,8 @@ class CartridgesApplication(Adw.Application):
         self.load_games_from_disk()
 
         # Add rest of the managers for game imports
-        shared.store.add_manager(LocalCoverManager())
+        shared.store.add_manager(CoverManager())
         shared.store.add_manager(SteamAPIManager())
-        shared.store.add_manager(OnlineCoverManager())
         shared.store.add_manager(SGDBManager())
         shared.store.toggle_manager_in_pipelines(FileManager, True)
 
@@ -229,6 +228,9 @@ class CartridgesApplication(Adw.Application):
 
         if shared.schema.get_boolean("bottles"):
             importer.add_source(BottlesSource())
+
+        if shared.schema.get_boolean("dolphin"):
+            importer.add_source(DolphinSource())
 
         if shared.schema.get_boolean("flatpak"):
             importer.add_source(FlatpakSource())
